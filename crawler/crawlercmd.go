@@ -33,18 +33,17 @@ import (
 	"github.com/ethereum/go-ethereum/p2p/discover"
 	"github.com/ethereum/go-ethereum/p2p/enode"
 
-	"gopkg.in/urfave/cli.v1"
+	"github.com/urfave/cli/v2"
 )
 
 var (
-	crawlerCommand = cli.Command{
+	crawlerCommand = &cli.Command{
 		Name:      "crawl",
 		Usage:     "Crawl the ethereum network",
 		ArgsUsage: "<nodefile>",
 		Action:    crawlNodes,
 		Flags: []cli.Flag{
 			utils.MainnetFlag,
-			utils.RopstenFlag,
 			utils.RinkebyFlag,
 			utils.GoerliFlag,
 			utils.NetworkIdFlag,
@@ -59,41 +58,41 @@ var (
 			geoipdbFlag,
 		},
 	}
-	bootnodesFlag = cli.StringFlag{
+	bootnodesFlag = &cli.StringFlag{
 		Name:  "bootnodes",
 		Usage: "Comma separated nodes used for bootstrapping",
 	}
-	nodeURLFlag = cli.StringFlag{
+	nodeURLFlag = &cli.StringFlag{
 		Name:  "nodeURL",
 		Usage: "URL of the node you want to connect to",
 		// Value: "http://localhost:8545",
 	}
-	nodeFileFlag = cli.StringFlag{
+	nodeFileFlag = &cli.StringFlag{
 		Name:  "nodefile",
 		Usage: "Path to a node file containing nodes to be crawled",
 	}
-	timeoutFlag = cli.DurationFlag{
+	timeoutFlag = &cli.DurationFlag{
 		Name:  "timeout",
 		Usage: "Timeout for the crawling in a round",
 		Value: 5 * time.Minute,
 	}
-	tableNameFlag = cli.StringFlag{
+	tableNameFlag = &cli.StringFlag{
 		Name:  "table",
 		Usage: "Name of the sqlite table",
 	}
-	listenAddrFlag = cli.StringFlag{
+	listenAddrFlag = &cli.StringFlag{
 		Name:  "addr",
 		Usage: "Listening address",
 	}
-	nodekeyFlag = cli.StringFlag{
+	nodekeyFlag = &cli.StringFlag{
 		Name:  "nodekey",
 		Usage: "Hex-encoded node key",
 	}
-	nodedbFlag = cli.StringFlag{
+	nodedbFlag = &cli.StringFlag{
 		Name:  "nodedb",
 		Usage: "Nodes database location",
 	}
-	geoipdbFlag = cli.StringFlag{
+	geoipdbFlag = &cli.StringFlag{
 		Name:  "geoipdb",
 		Usage: "geoip2 database location",
 	}
@@ -240,8 +239,6 @@ func runCrawler(ctx *cli.Context, disc resolver, inputSet nodeSet, timeout time.
 // with local flags instead of global flags.
 func makeGenesis(ctx *cli.Context) *core.Genesis {
 	switch {
-	case ctx.Bool(utils.RopstenFlag.Name):
-		return core.DefaultRopstenGenesisBlock()
 	case ctx.Bool(utils.RinkebyFlag.Name):
 		return core.DefaultRinkebyGenesisBlock()
 	case ctx.Bool(utils.GoerliFlag.Name):

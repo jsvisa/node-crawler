@@ -12,7 +12,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/protolambda/zrnt v0.28.0
 	github.com/protolambda/ztyp v0.2.2
-	gopkg.in/urfave/cli.v1 v1.20.0
+	github.com/urfave/cli/v2 v2.17.2-0.20221006022127-8f469abc00aa
 )
 
 require (
@@ -82,7 +82,6 @@ require (
 	github.com/tklauser/go-sysconf v0.3.5 // indirect
 	github.com/tklauser/numcpus v0.2.2 // indirect
 	github.com/tyler-smith/go-bip39 v1.1.0 // indirect
-	github.com/urfave/cli/v2 v2.17.2-0.20221006022127-8f469abc00aa // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
 	golang.org/x/crypto v0.1.0 // indirect
 	golang.org/x/exp v0.0.0-20230206171751-46f607a40771 // indirect

@@ -67,7 +67,7 @@ func getClientInfo(genesis *core.Genesis, networkID uint64, nodeURL string, n *e
 		return nil, errors.Wrap(err, "cannot set conn deadline")
 	}
 
-	s := getStatus(genesis.Config, uint32(conn.negotiatedProtoVersion), genesis.ToBlock(nil).Hash(), networkID, nodeURL)
+	s := getStatus(genesis.Config, uint32(conn.negotiatedProtoVersion), genesis.ToBlock().Hash(), networkID, nodeURL)
 	if err = conn.Write(s); err != nil {
 		return nil, err
 	}
@@ -166,7 +166,7 @@ func getStatus(config *params.ChainConfig, version uint32, genesis common.Hash, 
 			TD:              big.NewInt(0),
 			Head:            genesis,
 			Genesis:         genesis,
-			ForkID:          forkid.NewID(config, genesis, 0),
+			ForkID:          forkid.NewID(config, genesis, 0, 0),
 		}
 	}
 
@@ -184,7 +184,7 @@ func getStatus(config *params.ChainConfig, version uint32, genesis common.Hash, 
 		}
 
 		_status.Head = header.Hash()
-		_status.ForkID = forkid.NewID(config, genesis, header.Number.Uint64())
+		_status.ForkID = forkid.NewID(config, genesis, header.Number.Uint64(), header.Time)
 	}
 
 	return _status
